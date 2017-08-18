@@ -2,6 +2,16 @@
 
 class Page extends Model
 {
+
+    /**
+     * Page constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->attach(new PageObserver());
+    }
+
     public function getActiveUser()
     {
         $activeUser = Session::get('user');
@@ -69,6 +79,7 @@ class Page extends Model
                     `content` = '$content',
                     `is_published` = '$is_published'
                     WHERE `id` = $id;";
+            if (Session::get('role') != 'admin') {$this->notify();}
         }
 
         return $this->db->query($sql);

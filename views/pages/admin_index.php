@@ -2,16 +2,18 @@
 <table class="table table-striped">
     <thead>
         <tr>
+            <th>Id</th>
             <th>Alias</th>
             <th>Title</th>
             <th>Content</th>
-            <th>is_published</th>
+            <th>Is Published</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 <?php foreach ($data['pages'] as $page) : ?>
     <tr>
+        <td><?php echo $page['id']; ?></td>
         <td><?php echo $page['alias']; ?></td>
         <td><?php echo $page['title']; ?></td>
         <td><?php echo $page['content']; ?></td>

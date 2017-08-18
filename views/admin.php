@@ -22,17 +22,21 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <?php if (Session::get('user')) : ?>
-                    <?php if (Session::get('user') == 'admin') : ?>
-                <li <?php echo App::getRouter()->getController() == 'users' ? 'class="active"' : ''; ?>>
-                    <a href="/admin/users">Users</a>
-                </li>
+                    <?php if (Session::get('role') == 'admin') : ?>
+                    <li <?php echo App::getRouter()->getController() == 'users' ? 'class="active"' : ''; ?>>
+                        <a href="/admin/users">Users</a>
+                    </li>
+                    <li <?php echo App::getRouter()->getController() == 'notifications' ? 'class="active"' : ''; ?>>
+                        <a href="/admin/notifications">Notifications</a>
+                    </li>
                     <?php endif; ?>
-                    <li <?php echo App::getRouter()->getController() == 'pages' ? 'class="active"' : ''; ?>>
-                    <a href="/admin/pages">Pages</a>
+                <li <?php echo App::getRouter()->getController() == 'pages' ? 'class="active"' : ''; ?>>
+                <a href="/admin/pages">Pages</a>
                 </li>
                 <li <?php echo App::getRouter()->getController() == 'contacts' ? 'class="active"' : ''; ?>>
                     <a href="/admin/contacts">Contact Us</a>
                 </li>
+
                 <li>
                     <a href="/admin/users/logout">Logout</a>
                 </li>
