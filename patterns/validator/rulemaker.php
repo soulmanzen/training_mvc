@@ -13,7 +13,7 @@ class RuleMaker
         'name' => ['NotEmptyValidator'],
         'email' => ['NotEmptyValidator', 'EmailValidator'],
         'amount' => ['IntegerValidator'],
-        'id' => ['IntegerValidator'],
+        'id' => ['IntegerValidator', 'AuthorValidator'],
         'alias' => ['NotEmptyValidator'],
         'title' => ['NotEmptyValidator'],
         'content' => ['NotEmptyValidator'],

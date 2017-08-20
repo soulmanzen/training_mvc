@@ -14,7 +14,7 @@ class IntegerValidator implements ValidatorInterface
         $array = $args[0];
         $field = $args[1];
 
-        if (!is_int((int)$array[$field])) {
+        if (!ctype_digit(strval($array[$field]))) {
             $this->error = ucfirst($field)." must be an integer";
         }
     }
