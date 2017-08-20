@@ -52,23 +52,13 @@ class UsersController extends Controller
     public function admin_edit()
     {
         if ($_POST) {
-            $errors = [];
 
-            if (empty($_POST['login'])) {
-                $errors[] = 'Login is required';
-            }
+            $ruleMaker = new RuleMaker($_POST);
+            $rules = $ruleMaker->getRules();
 
-            if (empty($_POST['email'])) {
-                $errors[] = 'Email is required';
-            }
-
-            if (empty($_POST['role'])) {
-                $errors[] = 'Role is required';
-            }
-
-            if (empty($_POST['password'])) {
-                $_POST['password'] = null;
-            }
+            $validator = new Validator($rules);
+            $validator->validate($_POST);
+            $errors = $validator->getErrors();
 
             if (empty($errors)) {
                 if ($this->model->save($_POST, $_POST['id'])) {
@@ -94,23 +84,13 @@ class UsersController extends Controller
     public function admin_add()
     {
         if ($_POST) {
-            $errors = [];
 
-            if (empty($_POST['login'])) {
-                $errors[] = 'Login is required';
-            }
+            $ruleMaker = new RuleMaker($_POST);
+            $rules = $ruleMaker->getRules();
 
-            if (empty($_POST['email'])) {
-                $errors[] = 'Email is required';
-            }
-
-            if (empty($_POST['role'])) {
-                $errors[] = 'Role is required';
-            }
-
-            if (empty($_POST['password'])) {
-                $errors[] = 'Password is required';
-            }
+            $validator = new Validator($rules);
+            $validator->validate($_POST);
+            $errors = $validator->getErrors();
 
             if (empty($errors)) {
                 if ($this->model->save($_POST)) {

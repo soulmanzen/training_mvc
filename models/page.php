@@ -79,7 +79,9 @@ class Page extends Model
                     `content` = '$content',
                     `is_published` = '$is_published'
                     WHERE `id` = $id;";
-            if (Session::get('role') != 'admin') {$this->notify();}
+            if (Session::get('role') != 'admin') {
+                $this->notify();
+            }
         }
 
         return $this->db->query($sql);

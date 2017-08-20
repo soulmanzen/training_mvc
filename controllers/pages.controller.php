@@ -40,19 +40,13 @@ class PagesController extends Controller
     public function admin_edit()
     {
         if ($_POST) {
-            $errors = [];
 
-            if (empty($_POST['alias'])) {
-                $errors[] = 'Alias is required';
-            }
+            $ruleMaker = new RuleMaker($_POST);
+            $rules = $ruleMaker->getRules();
 
-            if (empty($_POST['title'])) {
-                $errors[] = 'Title is required';
-            }
-
-            if (empty($_POST['content'])) {
-                $errors[] = 'Content is required';
-            }
+            $validator = new Validator($rules);
+            $validator->validate($_POST);
+            $errors = $validator->getErrors();
 
             if (empty($errors)) {
                 if ($this->model->save($_POST, $_POST['id'])) {
@@ -98,19 +92,13 @@ class PagesController extends Controller
     public function admin_add()
     {
         if ($_POST) {
-            $errors = [];
 
-            if (empty($_POST['alias'])) {
-                $errors[] = 'Alias is required';
-            }
+            $ruleMaker = new RuleMaker($_POST);
+            $rules = $ruleMaker->getRules();
 
-            if (empty($_POST['title'])) {
-                $errors[] = 'Title is required';
-            }
-
-            if (empty($_POST['content'])) {
-                $errors[] = 'Content is required';
-            }
+            $validator = new Validator($rules);
+            $validator->validate($_POST);
+            $errors = $validator->getErrors();
 
             if (empty($errors)) {
                 if ($this->model->save($_POST)) {

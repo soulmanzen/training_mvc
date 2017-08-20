@@ -9,5 +9,6 @@
         <option <?php echo ($data['user']['role'] == 'user') ? 'selected' : ''; ?> value="user">user</option>
     </select><br>
     <input class="form-control" name="password" placeholder="Password" value=""><br>
+    <input class="form-control" name="password2" placeholder="Repeat password" value=""><br>
     <input type="submit" value="Save" class="btn btn-sm btn-success">
 </form>

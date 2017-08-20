@@ -6,6 +6,8 @@ define('LIB_PATH', ROOT.DS.'lib');
 define('CONTROLLERS_PATH', ROOT.DS.'controllers');
 define('MODELS_PATH', ROOT.DS.'models');
 define('VIEWS_PATH', ROOT.DS.'views');
+define('OBSERVERS_PATH', ROOT.DS.'patterns'.DS.'observers');
+define('VALIDATOR_PATH', ROOT.DS.'patterns'.DS.'validator');
 
 require_once ROOT.DS.'lib'.DS.'init.php';
 
