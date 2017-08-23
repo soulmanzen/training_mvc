@@ -20,3 +20,10 @@ Config::set('db_user', 'root');
 Config::set('db_pass', '');
 
 Config::set('salt', 'dhfkdshfkhdsfkds43545');
+
+Config::set('smtp_server', 'smtp.example.com');
+Config::set('tls_port', '***');
+Config::set('email_auth', 'user@example.com');
+Config::set('email_pass', 'password');
+Config::set('email_from_name', 'Admin');
+Config::set('email_from', 'admin@mvc.com');

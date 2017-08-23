@@ -36,16 +36,9 @@ class App
 
         $route = App::getRouter()->getRoute();
 
-        if ($controller == 'users' && $controller_action == 'admin_login') {
-            $admin_login = true;
-        } else {
-            $admin_login = false;
-        }
-
         if ($route == 'admin'
-            && empty(Session::get('user'))
-            && !$admin_login) {
-            Router::redirect('/admin/users/login');
+            && empty(Session::get('is_active'))) {
+            Router::redirect('/users/login');
         }
 
         $admin_action =  in_array($controller_action, ['admin_index', 'admin_edit', 'admin_add']);

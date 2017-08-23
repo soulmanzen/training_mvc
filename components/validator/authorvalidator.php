@@ -16,7 +16,7 @@ class AuthorValidator implements ValidatorInterface
         $pageModel = new Page();
         $currentPage = $pageModel->getById($array[$field]);
         $pageAuthorId = $currentPage['author_id'];
-        $userId = $pageModel->getActiveUser()['id'];
+        $userId = Session::get('userid');
 
         if ($pageAuthorId != $userId) {
             $this->error = "Stop hacking! You can not edit page that is not yours.";

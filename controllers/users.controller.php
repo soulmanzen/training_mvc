@@ -8,7 +8,7 @@ class UsersController extends Controller
         $this->model = new User();
     }
 
-    public function admin_login()
+    public function login()
     {
         if ($_POST) {
             $errors = [];
@@ -24,10 +24,16 @@ class UsersController extends Controller
             if (empty($errors)) {
                 $user = $this->model->getByLogin($_POST['login']);
                 $hash = md5(Config::get('salt').$_POST['password']);
-                if (!empty($user) && $user['password'] == $hash) {
+                if (!empty($user) && $user['password'] == $hash && $user['is_active'] == 1) {
+                    Session::set('userid', $user['id']);
                     Session::set('user', $user['login']);
                     Session::set('role', $user['role']);
-                    Router::redirect('/admin');
+                    Session::set('is_active', $user['is_active']);
+                    if (Session::get('role') == 'admin') {
+                        Router::redirect('/admin');
+                    } else {
+                        Router::redirect('/');
+                    }
                 } else {
                     Session::setFlash('Login or password is wrong');
                 }
@@ -37,11 +43,12 @@ class UsersController extends Controller
         }
     }
 
-    public function admin_logout()
+    public function logout()
     {
         Session::clear('user');
         Session::clear('role');
-        Router::redirect('/admin');
+        Session::clear('is_active');
+        Router::redirect('/');
     }
 
     public function admin_index()
@@ -102,6 +109,57 @@ class UsersController extends Controller
             } else {
                 Session::setFlash('Validation errors:<br>'.implode('<br>', $errors));
             }
+        }
+    }
+
+    public function register()
+    {
+        if ($_POST) {
+
+            $ruleMaker = new RuleMaker($_POST);
+            $rules = $ruleMaker->getRules();
+            $rules['email'] = [new NotEmptyValidator, new EmailValidator, new EmailExistsValidator($this->model)];
+            $rules['login'] = [new NotEmptyValidator, new LoginExistsValidator($this->model)];
+
+            $validator = new Validator($rules);
+            $validator->validate($_POST);
+            $errors = $validator->getErrors();
+
+            if (empty($errors)) {
+                if ($this->model->save($_POST)) {
+                    $activation = '?code='. $this->model->getByEmail($_POST['email'])['activation'];
+                    $link =  "<a href='http://mvc.loc/users/activate$activation'>mvc.loc/activate$activation</a>";
+                    $to = $_POST['email'];
+                    $subject = 'Confirm your email';
+                    $body = "Please follow this link $link to confirm your email";
+                    $mailer = new MailerFacade();
+                    $mailer->sendConfirmation($to, $subject, $body);
+                    Session::setFlash('User was created, check your email to confirm.');
+                } else {
+                    Session::setFlash('DB error! User was not saved');
+                }
+                Router::redirect('/');
+            } else {
+                Session::setFlash('Validation errors:<br>'.implode('<br>', $errors));
+            }
+        }
+    }
+
+    public function activate()
+    {
+        if(!empty($_GET['code']) && isset($_GET['code'])) {
+            $code = $_GET['code'];
+            if ($this->model->getByCode($code)) {
+                $this->model->activate($code);
+                $this->model->clearActivation($code);
+
+                Session::setFlash('Your account was successfully activated. You can login now.');
+                Router::redirect('/');
+            } else {
+                Router::redirect('/');
+            }
+        } else {
+            Router::redirect('/');
         }
     }
 }

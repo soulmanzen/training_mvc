@@ -28,7 +28,13 @@
                         <a href="/contacts">Contact Us</a>
                     </li>
                 </ul>
-                <a style="float: right" class="navbar-brand" href="/admin">Admin</a>
+                <?php if (Session::get('is_active')) : ?>
+                    <a style="float: right" class="navbar-brand" href="/admin">Admin</a>
+                    <a style="float: right" class="navbar-brand" href="/users/logout">Logout</a>
+                <?php else : ?>
+                    <a style="float: right" class="navbar-brand" href="/users/login">Login</a>
+                    <a style="float: right" class="navbar-brand" href="/users/register">Register</a>
+                <?php endif; ?>
             </div>
         </div>
     </nav>

@@ -12,15 +12,6 @@ class Page extends Model
         $this->attach(new PageObserver());
     }
 
-    public function getActiveUser()
-    {
-        $activeUser = Session::get('user');
-        $sql = "SELECT * FROM `users` WHERE login = '$activeUser';";
-        $result = $this->db->query($sql);
-
-        return $result[0];
-    }
-
     public function getList($onlyPublished = true)
     {
         $sql = "SELECT * FROM `pages`";
@@ -53,7 +44,7 @@ class Page extends Model
 
     public function getListByAuthorId()
     {
-        $author_id = $this->getActiveUser()['id'];
+        $author_id = Session::get('userid');
         $sql = "SELECT * FROM `pages` WHERE `author_id` = '$author_id';";
 
         return $this->db->query($sql);
@@ -69,7 +60,7 @@ class Page extends Model
         $is_published = isset($data['is_published']) ? 1 : 0;
 
         if (empty($id)) {
-            $author_id = $this->getActiveUser()['id'];
+            $author_id = Session::get('userid');
             $sql = "INSERT INTO `pages` (`alias`, `title`, `content`, `is_published`, `author_id`) 
                     VALUES ('$alias', '$title', '$content', '$is_published', '$author_id');";
         } else {

@@ -36,13 +36,10 @@
                 <li <?php echo App::getRouter()->getController() == 'contacts' ? 'class="active"' : ''; ?>>
                     <a href="/admin/contacts">Contact Us</a>
                 </li>
-
-                <li>
-                    <a href="/admin/users/logout">Logout</a>
-                </li>
                 <?php endif; ?>
             </ul>
             <a style="float: right" class="navbar-brand" href="/">Home</a>
+            <a style="float: right" class="navbar-brand" href="/users/logout">Logout</a>
             <div class="navbar-brand" style="font-size: 90%">
                 <div style="color: darkgray;">Logged as </div>
                 <div style="color: coral; float: right;" ><?php echo Session::get('user') ?></div>

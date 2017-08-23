@@ -116,8 +116,9 @@ class PagesController extends Controller
     private function isAuthor($id)
     {
         $page = $this->model->getById($id);
-        $activeUser = $this->model->getActiveUser();
+        $activeUserId = Session::get('userid');
+        $activeUserRole = Session::get('role');
 
-        return ($activeUser['role'] == 'admin') || ($page['author_id'] == $activeUser['id']);
+        return ($activeUserRole == 'admin') || ($page['author_id'] == $activeUserId);
     }
 }
