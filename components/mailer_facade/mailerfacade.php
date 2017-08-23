@@ -4,9 +4,9 @@ class MailerFacade
 {
     private $mailer;
 
-    public function __construct()
+    public function __construct(PHPMailer $mailer)
     {
-        $this->mailer = new PHPMailer();
+        $this->mailer = $mailer;
     }
 
     public function sendConfirmation($to, $subject, $body)

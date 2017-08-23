@@ -115,7 +115,6 @@ class UsersController extends Controller
     public function register()
     {
         if ($_POST) {
-
             $ruleMaker = new RuleMaker($_POST);
             $rules = $ruleMaker->getRules();
             $rules['email'] = [new NotEmptyRule, new EmailRule, new EmailExistsRule($this->model)];
@@ -127,12 +126,12 @@ class UsersController extends Controller
 
             if (empty($errors)) {
                 if ($this->model->save($_POST)) {
-                    $activation = '?code='. $this->model->getByEmail($_POST['email'])['activation'];
-                    $link =  "<a href='http://mvc.loc/users/activate$activation'>mvc.loc/activate$activation</a>";
+                    $activation = $this->model->getByEmail($_POST['email'])['activation'];
+                    $link =  "<a href='http://mvc.loc/users/activate/$activation'>mvc.loc/activate/$activation</a>";
                     $to = $_POST['email'];
                     $subject = 'Confirm your email';
                     $body = "Please follow this link $link to confirm your email";
-                    $mailer = new MailerFacade();
+                    $mailer = new MailerFacade(new PHPMailer());
                     $mailer->sendConfirmation($to, $subject, $body);
                     Session::setFlash('User was created, check your email to confirm.');
                 } else {
@@ -147,8 +146,10 @@ class UsersController extends Controller
 
     public function activate()
     {
-        if(!empty($_GET['code']) && isset($_GET['code'])) {
-            $code = $_GET['code'];
+        if (empty($this->params[0])) {
+            Router::redirect('/');
+        } else {
+            $code = (string) $this->params[0];
             if ($this->model->getByCode($code)) {
                 $this->model->activate($code);
                 $this->model->clearActivation($code);
@@ -158,8 +159,6 @@ class UsersController extends Controller
             } else {
                 Router::redirect('/');
             }
-        } else {
-            Router::redirect('/');
         }
     }
 }
