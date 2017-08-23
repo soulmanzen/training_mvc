@@ -1,19 +1,17 @@
 <?php
 
-class IntegerValidator implements ValidatorInterface
+class IntegerRule implements RuleInterface
 {
     private $error;
 
     /**
-     * @param array $args
+     * @param array $array
+     * @param string $field
      * $array - validated array
      * $field - validated key of $array
      */
-    public function validate (array $args)
+    public function validate (array $array, string $field)
     {
-        $array = $args[0];
-        $field = $args[1];
-
         if (!ctype_digit(strval($array[$field]))) {
             $this->error = ucfirst($field)." must be an integer";
         }

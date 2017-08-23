@@ -2,7 +2,7 @@
 
 /**
  * Class RuleMaker
- * makes rules for Validator
+ * makes rules for Rule
  */
 class RuleMaker
 {
@@ -10,20 +10,20 @@ class RuleMaker
      * preset rules to compare with
      */
     private $defaultRules = [
-        'name' => ['NotEmptyValidator'],
-        'email' => ['NotEmptyValidator', 'EmailValidator'],
-        'amount' => ['IntegerValidator'],
-        'id' => ['IntegerValidator', 'AuthorValidator'],
-        'alias' => ['NotEmptyValidator'],
-        'title' => ['NotEmptyValidator'],
-        'content' => ['NotEmptyValidator'],
-        'login' => ['NotEmptyValidator'],
-        'role' => ['NotEmptyValidator'],
-        'password' => ['NotEmptyValidator', 'MinCharactersNumberValidator', 'DataMatchValidator'],
+        'name' => ['NotEmptyRule'],
+        'email' => ['NotEmptyRule', 'EmailRule'],
+        'amount' => ['IntegerRule'],
+        'id' => ['IntegerRule'],
+        'alias' => ['NotEmptyRule'],
+        'title' => ['NotEmptyRule'],
+        'content' => ['NotEmptyRule'],
+        'login' => ['NotEmptyRule'],
+        'role' => ['NotEmptyRule'],
+        'password' => ['NotEmptyRule', 'MinCharactersNumberRule', 'DataMatchRule'],
     ];
 
     /**
-     * @var array of rules fo Validator
+     * @var array of rules fo Rule
      */
     private $rules = [];
 

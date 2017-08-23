@@ -1,20 +1,30 @@
 <?php
 
-class AuthorValidator implements ValidatorInterface
+class AuthorRule implements RuleInterface
 {
     private $error;
+    private $pageModel;
 
     /**
-     * @param array $args
+     * AuthorRule constructor.
+     * @param $pageModel
+     */
+    public function __construct($pageModel)
+    {
+        $this->pageModel = $pageModel;
+    }
+
+
+    /**
+     * @param array $array
+     * @param string $field
+     *
      * $array - validated array
      * $field - validated key of $array
      */
-    public function validate (array $args)
+    public function validate (array $array, string $field)
     {
-        $array = $args[0];
-        $field = $args[1];
-        $pageModel = new Page();
-        $currentPage = $pageModel->getById($array[$field]);
+        $currentPage = $this->pageModel->getById($array[$field]);
         $pageAuthorId = $currentPage['author_id'];
         $userId = Session::get('userid');
 

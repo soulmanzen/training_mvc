@@ -1,19 +1,17 @@
 <?php
 
-class EmailValidator implements ValidatorInterface
+class EmailRule implements RuleInterface
 {
     private $error;
 
     /**
-     * @param array $args
+     * @param array $array
+     * @param string $field
      * $array - validated array
      * $field - validated key of $array
      */
-    public function validate (array $args)
+    public function validate (array $array, string $field)
     {
-        $array = $args[0];
-        $field = $args[1];
-
         if (!filter_var($array[$field], FILTER_VALIDATE_EMAIL)) {
             $this->error = ucfirst($field)." must be written in correct way";
         }

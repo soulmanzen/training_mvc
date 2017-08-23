@@ -1,19 +1,17 @@
 <?php
 
-class NotEmptyValidator implements ValidatorInterface
+class NotEmptyRule implements RuleInterface
 {
     private $error;
 
     /**
-     * @param array $args
+     * @param array $array
+     * @param string $field
      * $array - validated array
      * $field - validated key of $array
      */
-    public function validate (array $args)
+    public function validate (array $array, string $field)
     {
-        $array = $args[0];
-        $field = $args[1];
-
         if (empty($array[$field])) {
             $this->error = ucfirst($field)." is required";
         }

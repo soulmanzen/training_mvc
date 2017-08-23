@@ -4,7 +4,7 @@
  * Class Validator
  * main validator that uses tiny validators to validate an array according to the rules.
  */
-class Validator implements ValidatorInterface
+class Validator
 {
     private $errors = [];
 
@@ -20,15 +20,16 @@ class Validator implements ValidatorInterface
 
     /**
      * @param array $array
+     * usually $_POST
      */
     public function validate(array $array)
     {
         foreach ($array as $field => $value) {
             if (array_key_exists($field, $this->rules)) {
-                foreach ($this->rules[$field] as $validator) {
-                    $validator->validate([$array, $field]);
-                    if ($validator->getErrors()) {
-                        $this->errors[] = $validator->getErrors();
+                foreach ($this->rules[$field] as $rule) {
+                    $rule->validate($array, $field);
+                    if ($rule->getErrors()) {
+                        $this->errors[] = $rule->getErrors();
                         break;
                     }
                 }

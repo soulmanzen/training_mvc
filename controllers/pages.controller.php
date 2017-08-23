@@ -43,6 +43,7 @@ class PagesController extends Controller
 
             $ruleMaker = new RuleMaker($_POST);
             $rules = $ruleMaker->getRules();
+            $rules['id'] = [new IntegerRule, new AuthorRule($this->model)];
 
             $validator = new Validator($rules);
             $validator->validate($_POST);

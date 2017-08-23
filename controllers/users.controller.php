@@ -118,8 +118,8 @@ class UsersController extends Controller
 
             $ruleMaker = new RuleMaker($_POST);
             $rules = $ruleMaker->getRules();
-            $rules['email'] = [new NotEmptyValidator, new EmailValidator, new EmailExistsValidator($this->model)];
-            $rules['login'] = [new NotEmptyValidator, new LoginExistsValidator($this->model)];
+            $rules['email'] = [new NotEmptyRule, new EmailRule, new EmailExistsRule($this->model)];
+            $rules['login'] = [new NotEmptyRule, new LoginExistsRule($this->model)];
 
             $validator = new Validator($rules);
             $validator->validate($_POST);

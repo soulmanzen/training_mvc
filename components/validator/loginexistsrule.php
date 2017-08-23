@@ -1,6 +1,6 @@
 <?php
 
-class EmailExistsValidator implements ValidatorInterface
+class LoginExistsRule implements RuleInterface
 {
     private $error;
     private $userModel;
@@ -11,17 +11,15 @@ class EmailExistsValidator implements ValidatorInterface
     }
 
     /**
-     * @param array $args
+     * @param array $array
+     * @param string $field
      * $array - validated array
      * $field - validated key of $array
      */
-    public function validate (array $args)
+    public function validate (array $array, string $field)
     {
-        $array = $args[0];
-        $field = $args[1];
-
-        if ($this->userModel->getByEmail($array[$field])) {
-            $this->error = "User with such email already exists";
+        if ($this->userModel->getByLogin($array[$field])) {
+            $this->error = "User with such login already exists";
         }
     }
 

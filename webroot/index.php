@@ -7,7 +7,7 @@ define('CONTROLLERS_PATH', ROOT.DS.'controllers');
 define('MODELS_PATH', ROOT.DS.'models');
 define('VIEWS_PATH', ROOT.DS.'views');
 define('OBSERVERS_PATH', ROOT.DS.'components'.DS.'observers');
-define('VALIDATOR_PATH', ROOT.DS.'components'.DS.'validator');
+define('VALIDATOR_PATH', ROOT.DS.'components'.DS. 'validator');
 define('MAILER_FACADE_PATH', ROOT.DS.'components'.DS.'mailer_facade');
 
 require_once ROOT.DS.'lib'.DS.'init.php';
