@@ -25,6 +25,23 @@ class Page extends Model
         return $this->db->query($sql);
     }
 
+    public function getListByPage($onlyPublished = true, $pageNumber)
+    {
+        $sql = "SELECT * FROM `pages`";
+
+        if ($onlyPublished) {
+            $sql .= " WHERE `is_published` = 1";
+        }
+
+        $pageNumber = $this->db->escape($pageNumber);
+        $offset = ($pageNumber - 1) * Config::get('ITEMS_PER_PAGE');
+        $limit = Config::get('ITEMS_PER_PAGE');
+
+        $sql .= "LIMIT $offset, $limit;";
+
+        return $this->db->query($sql);
+    }
+
     public function getByAlias($alias)
     {
         $alias = $this->db->escape($alias);
@@ -48,6 +65,35 @@ class Page extends Model
         $sql = "SELECT * FROM `pages` WHERE `author_id` = '$author_id';";
 
         return $this->db->query($sql);
+    }
+
+    public function getListByAuthorIdByPage($pageNumber)
+    {
+        $author_id = Session::get('userid');
+        $pageNumber = $this->db->escape($pageNumber);
+        $offset = ($pageNumber - 1) * Config::get('ITEMS_PER_PAGE');
+        $limit = Config::get('ITEMS_PER_PAGE');
+
+        $sql = "SELECT * FROM `pages` WHERE `author_id` = '$author_id' LIMIT $offset, $limit;";
+
+        return $this->db->query($sql);
+    }
+
+    public function getPagination()
+    {
+        $sql = "SELECT COUNT(`id`) as pagesCount FROM `pages`;";
+        $this->db->query($sql);
+        $pagesCount = $this->db->query($sql)[0]['pagesCount'];
+
+        $links = [];
+        if ($pagesCount > Config::get('ITEMS_PER_PAGE')) {
+            $pages = ceil($pagesCount / Config::get('ITEMS_PER_PAGE'));
+            for ($i = 1; $i <= $pages; $i++) {
+                $links[] = $i;
+            }
+        }
+
+        return $links;
     }
 
     public function save($data, $id = null)

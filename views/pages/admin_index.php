@@ -1,36 +1,23 @@
+<script src="/js/jquery.min.js"></script>
+
 <h3>Pages</h3>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Alias</th>
-            <th>Title</th>
-            <th>Content</th>
-            <th>Is Published</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-<?php foreach ($data['pages'] as $page) : ?>
-    <tr>
-        <td><?php echo $page['id']; ?></td>
-        <td><?php echo $page['alias']; ?></td>
-        <td><?php echo $page['title']; ?></td>
-        <td><?php echo $page['content']; ?></td>
-        <td><?php echo $page['is_published'] == 1 ? 'yes' : 'no'; ?></td>
-        <td>
-            <a href="/admin/pages/edit/<?php echo $page['id']; ?>">
-                <button class="btn btn-sm btn-primary">edit</button>
-            </a>
-            <a href="/admin/pages/delete/<?php echo $page['id']; ?>" onclick="return confirmDelete();">
-                <button class="btn btn-sm btn-warning">delete</button>
-            </a>
-        </td>
-    </tr>
-<?php endforeach; ?>
-    </tbody>
-</table>
-<br>
+
+<div id="results"><!-- content will be loaded here --></div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#results" ).load( "/pages/admin_pagination"); //load initial records
+
+        //executes code below when user click on pagination links
+        $("#results").on( "click", function (e){
+            e.preventDefault();
+            var page = $(this).attr("data-page"); //get page number from link
+            $("#results").load("/pages/admin_pagination", {"page":page});
+
+        });
+    });
+</script>
+
 <a href="/admin/pages/add">
     <button class="btn btn-sm btn-success">New Page</button>
 </a>

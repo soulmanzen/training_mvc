@@ -34,7 +34,6 @@ class PagesController extends Controller
 
     public function admin_index()
     {
-        $this->data['pages'] = Session::get('user') != 'admin' ? $this->model->getListByAuthorId() : $this->model->getList(false);
     }
 
     public function admin_edit()
@@ -121,5 +120,17 @@ class PagesController extends Controller
         $activeUserRole = Session::get('role');
 
         return ($activeUserRole == 'admin') || ($page['author_id'] == $activeUserId);
+    }
+
+    public function admin_pagination()
+    {
+        $rules['page'] = [new IntegerRule];
+        $validator = new Validator($rules);
+        $validator->validate($_POST);
+
+        $pageNumber = $_POST['page'] ?? 1;
+        $this->data['pages'] = Session::get('user') != 'admin' ? $this->model->getListByAuthorIdByPage($pageNumber) : $this->model->getListByPage(false, $pageNumber);
+
+        $this->data['pagilinks'] = $this->model->getPagination();
     }
 }
