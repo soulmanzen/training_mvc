@@ -13,9 +13,9 @@ define('MAILER_FACADE_PATH', ROOT.DS.'components'.DS.'mailer_facade');
 require_once ROOT.DS.'lib'.DS.'init.php';
 require_once ROOT.DS.'vendor'.DS.'autoload.php';
 
-try {
+//try {
     App::run($_SERVER['REQUEST_URI']);
-} catch (Exception $exception) {
-    echo 'App exception: '.$exception->getMessage();
-}
+//} catch (Exception $exception) {
+//    echo 'App exception: '.$exception->getMessage();
+//}
 
