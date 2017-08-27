@@ -129,8 +129,8 @@ class PagesController extends Controller
         $validator->validate($_POST);
 
         $pageNumber = $_POST['page'] ?? 1;
-        $this->data['pages'] = Session::get('user') != 'admin' ? $this->model->getListByAuthorIdByPage($pageNumber) : $this->model->getListByPage(false, $pageNumber);
+        $this->data['pages'] = Session::get('role') != 'admin' ? $this->model->getListByAuthorIdByPage($pageNumber) : $this->model->getListByPage(false, $pageNumber);
 
-        $this->data['pagilinks'] = $this->model->getPagination();
+        $this->data['pagilinks'] = Session::get('role') != 'admin' ? $this->model->getPagination(true) : $this->model->getPagination();
     }
 }

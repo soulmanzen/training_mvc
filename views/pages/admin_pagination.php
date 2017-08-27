@@ -30,8 +30,12 @@
     </tbody>
 </table>
 
-<?php
-    foreach ($data['pagilinks'] as $link) {
-    echo '<a href = "#" class="pagination" data-page= "'.$link.'" title = "Next" >' . $link . '</a >';
-}
-?>
+<div class="bs-example">
+    <ul class="pagination">
+        <?php
+        foreach ($data['pagilinks'] as $link) {
+            echo '<li><a href = "#" class="pagination" data-page= "'.$link.'" title = "Next" >' . $link . '</a ></li>';
+        }
+        ?>
+    </ul>
+</div>

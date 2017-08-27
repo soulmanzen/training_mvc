@@ -79,9 +79,17 @@ class Page extends Model
         return $this->db->query($sql);
     }
 
-    public function getPagination()
+    public function getPagination($byAuthor = false)
     {
-        $sql = "SELECT COUNT(`id`) as pagesCount FROM `pages`;";
+        $sql = "SELECT COUNT(`id`) as pagesCount FROM `pages`";
+
+        if ($byAuthor) {
+            $author_id = Session::get('userid');
+            $sql .= "WHERE `author_id` = '$author_id'";
+        }
+
+        $sql .= ";";
+
         $this->db->query($sql);
         $pagesCount = $this->db->query($sql)[0]['pagesCount'];
 
