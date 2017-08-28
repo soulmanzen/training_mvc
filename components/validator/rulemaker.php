@@ -20,6 +20,7 @@ class RuleMaker
         'login' => ['NotEmptyRule'],
         'role' => ['NotEmptyRule'],
         'password' => ['NotEmptyRule', 'MinCharactersNumberRule', 'DataMatchRule'],
+        'message' => ['NotEmptyRule']
     ];
 
     /**

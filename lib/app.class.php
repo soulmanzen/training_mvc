@@ -65,11 +65,16 @@ class App
             throw new Exception('Method '.$controller_action.' of class '.$controller_class.' does not exist');
         }
 
-        $layout = $route;
-        $layout_path = VIEWS_PATH.DS.$layout.'.php';
-        //$layout_view_object = new View(['content' => $content], $layout_path);
-        $layout_view_object = new View(compact('content'), $layout_path);
-        echo $layout_view_object->render();
+        if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
+        {
+            echo $content;
+        } else {
+            $layout = $route;
+            $layout_path = VIEWS_PATH . DS . $layout . '.php';
+            //$layout_view_object = new View(['content' => $content], $layout_path);
+            $layout_view_object = new View(compact('content'), $layout_path);
+            echo $layout_view_object->render();
+        }
     }
 
     /**

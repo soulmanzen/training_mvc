@@ -10,29 +10,29 @@ class ContactsController extends Controller
 
     public function index()
     {
+    }
+
+
+    public function index_ajax()
+    {
         if ($_POST) {
-            $errors = [];
+            $ruleMaker = new RuleMaker($_POST);
+            $rules = $ruleMaker->getRules();
+            $rules['id'] = [new IntegerRule, new AuthorRule($this->model)];
 
-            if (empty($_POST['name'])) {
-                $errors[] = 'Name is required';
-            }
-
-            if (empty($_POST['email'])) {
-                $errors[] = 'Email is required';
-            }
-
-            if (empty($_POST['message'])) {
-                $errors[] = 'Message is required';
-            }
+            $validator = new Validator($rules);
+            $validator->validate($_POST);
+            $errors = $validator->getErrors();
 
             if (empty($errors)) {
                 if ($this->model->save($_POST)) {
-                    Session::setFlash('Thank you! Your message was sent');
+                    $this->data['message'] = 'Thank you! Your message was sent';
+
                 } else {
-                    Session::setFlash('DB error! Message was not saved');
+                    $this->data['errors'][] = 'DB error! Message was not saved';
                 }
             } else {
-                Session::setFlash('Validation errors:<br>'.implode('<br>', $errors));
+                $this->data['errors'] = $errors;
             }
         }
     }
