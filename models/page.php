@@ -25,7 +25,7 @@ class Page extends Model
         return $this->db->query($sql);
     }
 
-    public function getListByPage($onlyPublished = true, $pageNumber)
+    public function getListByPage($pageNumber, $onlyPublished = true)
     {
         $sql = "SELECT * FROM `pages`";
 

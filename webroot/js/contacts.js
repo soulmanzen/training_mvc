@@ -7,7 +7,7 @@ function sendMessage() {
         $.ajax({
             url: '/contacts/index_ajax',
             type: 'post',
-            beforeSend: function(xhr){xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');},
+            // beforeSend: function(xhr){xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');},
             data: data,
             success: function(response) {
                 $('#container').html(response);
