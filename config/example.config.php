@@ -27,3 +27,5 @@ Config::set('email_auth', 'user@example.com');
 Config::set('email_pass', 'password');
 Config::set('email_from_name', 'Admin');
 Config::set('email_from', 'admin@mvc.com');
+
+Config::set('ITEMS_PER_PAGE', 3);
