@@ -29,3 +29,14 @@ Config::set('email_from_name', 'Admin');
 Config::set('email_from', 'admin@mvc.com');
 
 Config::set('ITEMS_PER_PAGE', 3);
+
+Config::set('assets', [
+    'public_dir' => DS.'webroot',
+    'autoload' => [
+        'style.css',
+        'jquery.min.js',
+        'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
+        'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css',
+        'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'
+    ]
+]);

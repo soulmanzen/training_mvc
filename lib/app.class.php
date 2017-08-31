@@ -4,6 +4,8 @@ class App
 {
     protected static $router;
     protected static $db;
+    protected static $assets;
+
 
     /**
      * @return mixed
@@ -13,10 +15,17 @@ class App
         return self::$router;
     }
 
+    public static function getAssets()
+    {
+        return self::$assets;
+    }
+
     public static function run($uri)
     {
         session_start();
         self::$router = new Router($uri);
+
+        self::$assets = new Stolz\Assets\Manager(Config::get('assets'));
 
         self::$db = new DB(
             Config::get('db_host'),

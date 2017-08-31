@@ -6,6 +6,7 @@ class ContactsController extends Controller
     {
         parent::__construct($data);
         $this->model = new Message();
+        App::getAssets()->add('contacts.js');
     }
 
     public function index()

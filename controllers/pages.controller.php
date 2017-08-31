@@ -10,6 +10,7 @@ class PagesController extends Controller
     {
         parent::__construct($data);
         $this->model = new Page();
+        App::getAssets()->add('admin.js');
     }
 
     public function index()
