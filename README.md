@@ -2,7 +2,7 @@
 training mvc oop
 
 Folders (and files in them) made by me:
-components
-controllers
-models
-views
+components,
+controllers,
+models,
+views.
